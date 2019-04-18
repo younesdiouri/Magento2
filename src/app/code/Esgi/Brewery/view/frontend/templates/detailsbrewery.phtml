@@ -1,0 +1,38 @@
+<?php 
+
+$brewery = $this->getBrewery();
+
+echo $brewery->getDescription();
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$listBlock = $objectManager->get('\Magento\Catalog\Block\Product\ListProduct');
+
+$store = $objectManager->get('Magento\Store\Model\StoreManagerInterface')->getStore();
+
+
+foreach($brewery->getProducts() as $unProduit): ?>
+
+    <?php $imageUrl = $store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product' . $unProduit->getImage(); ?>
+
+    <div style="border-radius:10px; margin: 10px; display: inline-block;">
+        
+        <p><img src="<?= $imageUrl ?>" style="max-width: 150px;"/></p>
+        <p><?= $unProduit->getDescription() ?></p>
+        <p style="font-weight:bold"><?= $unProduit->getName() ?></p>
+        <p><?= $unProduit->getPrice() ?> €</p>
+
+        <?php $addToCartUrl =  $listBlock->getAddToCartUrl($unProduit); ?>
+
+        <form data-role="tocart-form" action="<?php echo $addToCartUrl; ?>" method="post"> 
+            <?php // echo $block->getBlockHtml('formkey')?>
+            <div class="btn">
+                <button type="submit" title="Add to Cart" class="action tocart primary">
+                    <span>Add to Cart</span>
+                </button>
+            </div>   
+        </form>
+    </div>
+
+<?php endforeach; ?>
+
+

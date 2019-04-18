@@ -1,0 +1,38 @@
+{
+  "esgi_job_department": {
+    "column": {
+      "entity_id": true,
+      "title": true,
+      "content": true,
+      "creation_time": true,
+      "update_time": true,
+      "is_active": true
+    },
+    "index": {
+      "ESGI_DEPARTMENT_TITLE_CONTENT": true
+    },
+    "constraint": {
+      "PRIMARY": true
+    }
+  },
+  "esgi_job_job": {
+    "column": {
+      "entity_id": true,
+      "title": true,
+      "type": true,
+      "location": true,
+      "content": true,
+      "creation_time": true,
+      "update_time": true,
+      "is_active": true,
+      "department_id": true
+    },
+    "index": {
+      "ESGI_JOB_TITLE_CONTENT": true
+    },
+    "constraint": {
+      "PRIMARY": true,
+      "ESGI_JOB_JOB_DEPARTMENT_ID_ESGI_JOB_DEPARTMENT_ENTITY_ID": true
+    }
+  }
+}

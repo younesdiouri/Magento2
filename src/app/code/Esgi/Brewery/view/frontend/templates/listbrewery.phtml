@@ -1,0 +1,16 @@
+<?php
+/** @var $block Esgi\Brewery\Block\Brewery */
+$breweries = $block->getBreweries();
+
+
+?>
+<ul id="brewery-list">
+    <?php foreach ($breweries as $brewery) : 
+    $url = $block->getUrl('brewery/brewery/view/name/' , ['name' => $brewery->getSlug()]);?>
+        <?php if($brewery['is_active'] == 1 ){?>
+        <li><?php echo $brewery->getName(); ?>
+        <?php echo $brewery->getDescription();}?></li>
+        <a href="<?= $url; ?>">Details</a>
+    <?php endforeach; ?>
+</ul>
+

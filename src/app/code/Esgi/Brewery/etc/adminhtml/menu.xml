@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Esgi_Brewery::brewery_head" title="Breweries" module="Esgi_Brewery" sortOrder="100" resource="Esgi_Brewery::brewery_head" />
+        <add id="Esgi_Brewery::brewery" title="Breweries" module="Esgi_Brewery" sortOrder="10" parent="Esgi_Brewery::brewery_head" action="brewery/brewery" resource="Esgi_Brewery::brewery" />
+    </menu>
+</config>

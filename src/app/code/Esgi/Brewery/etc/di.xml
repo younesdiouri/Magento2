@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Esgi\Brewery\Api\Data\BrewerySearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+    <preference for="Esgi\Brewery\Api\Data\BreweryInterface" type="Esgi\Brewery\Model\Brewery" />
+    <preference for="Esgi\Brewery\Api\BreweryRepositoryInterface" type="Esgi\Brewery\Model\BreweryRepository" />
+    <preference for="Esgi\Brewery\Api\Data\Brewery\ProductInterface" type="Esgi\Brewery\Model\Brewery\Product" />
+    <preference for="Esgi\Brewery\Api\Brewery\ProductRepositoryInterface" type="Esgi\Brewery\Model\Brewery\ProductRepository" />
+
+    <type name="Esgi\Brewery\Controller\Adminhtml\Brewery\Save">
+        <plugin name="brewery_products_save" type="Esgi\Brewery\Plugin\BreweryProductsSave" sortOrder="1" />
+    </type>
+
+    <!-- Create our type BreweryGridDataProvider -->
+    <virtualType name="BreweryGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Esgi\Brewery\Model\ResourceModel\Brewery\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">BreweryGridFilterPool</argument> <!-- Define new object for filters -->
+        </arguments>
+    </virtualType>
+
+    <!-- Create our type BreweryGridFilterPool -->
+    <virtualType name="BreweryGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Type for brewery_brewery_listing_data_source -->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="brewery_brewery_listing_data_source" xsi:type="string">Esgi\Brewery\Model\ResourceModel\Grid\Brewery\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- Simulate our class Esgi\Brewery\Model\ResourceModel\Grid\Brewery\Collection -->
+    <virtualType name="Esgi\Brewery\Model\ResourceModel\Grid\Brewery\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">esgi_brewery_brewery</argument>
+            <argument name="resourceModel" xsi:type="string">Esgi\Brewery\Model\ResourceModel\Brewery</argument>
+        </arguments>
+    </virtualType>
+</config>

@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="esgi_brewery_brewery" resource="default" engine="innodb" comment="Brewery Table">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true"
+                comment="Entity Id"/>
+        <column xsi:type="varchar" name="name" nullable="false" length="255" comment="Brewery Name"/>
+        <column xsi:type="varchar" name="slug" nullable="false" length="255" comment="Brewery Slug"/>
+        <column xsi:type="mediumtext" name="description" nullable="true" comment="Brewery Description"/>
+        <column xsi:type="smallint" name="is_active" padding="6" unsigned="false" nullable="false" identity="false"
+                default="1" comment="Is Brewery Active"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Creation Time"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Update Time"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <index referenceId="ESGI_DEPARTMENT_NAME_DESCRIPTION" indexType="fulltext">
+            <column name="name"/>
+            <column name="description"/>
+        </index>
+    </table>
+    <table name="esgi_brewery_brewery_product" resource="default" engine="innodb" comment="Brewery Products Table">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true"
+                comment="Entity Id"/>
+        <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="false" comment="Product Id"/>
+        <column xsi:type="int" name="brewery_id" padding="10" unsigned="true" nullable="false" comment="Brewery Id"/>
+        <constraint xsi:type="foreign" referenceId="ESGI_BREWERY_BREWERY_PRODUCT_ID_CATALOG_PRODUCT_ENTITY_ENTITY_ID" table="esgi_brewery_brewery_product"
+                    column="product_id" referenceTable="catalog_product_entity" referenceColumn="entity_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="ESGI_BREWERY_BREWERY_BREWERY_ID_ESGI_BREWERY_BREWERY_ENTITY_ID" table="esgi_brewery_brewery_product"
+                    column="brewery_id" referenceTable="esgi_brewery_brewery" referenceColumn="entity_id" onDelete="CASCADE"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
+</schema>

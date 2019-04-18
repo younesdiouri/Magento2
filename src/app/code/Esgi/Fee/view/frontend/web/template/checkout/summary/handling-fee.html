@@ -1,0 +1,8 @@
+<!-- ko if: isDisplayedHandlingfeeTotal() -->
+<tr class="totals coupon-fee excl">
+    <th class="mark" colspan="1" scope="row" data-bind="text: handlingfee"></th>
+    <td class="amount">
+        <span class="price" data-bind="text: getHandlingfeeTotal(), attr: {'data-th': handlingfee}"></span>
+    </td>
+</tr>
+<!-- /ko -->
